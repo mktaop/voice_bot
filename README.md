@@ -7,3 +7,5 @@ Python Libraries you might need to install:
   pip install google-cloud-texttospeech
   pip install simpleaudio
   pip install playsound
+
+Also provided the spkr.gif file that simulates a sound speaker playing.
