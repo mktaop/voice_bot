@@ -63,8 +63,7 @@ def main():
                 with st.chat_message("user"):
                     st.write(prompt)
             
-                #st.session_state.message += prompt
-                with st.chat_message("model", avatar="🧞‍♀️",):
+                 with st.chat_message("model", avatar="🧞‍♀️",):
                     for chunk in client.models.generate_content_stream(
                         model=MODEL_ID,
                         config=types.GenerateContentConfig(
@@ -88,7 +87,52 @@ def main():
 
     
         elif choice == 'Audio 2 Audio':
-            pass
+            audio_bytes = audio_recorder(recording_color="#6aa36f", neutral_color="#e82c58")
+            if audio_bytes:
+                
+                audio = speech.RecognitionAudio(content=audio_bytes)
+    
+                config = speech.RecognitionConfig(
+                    encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
+                    #sample_rate_hertz=44100,
+                    language_code="en-US",
+                    model="default",
+                    audio_channel_count=2,
+                    enable_word_confidence=True,
+                    enable_word_time_offsets=True,
+                )
+    
+                operation = client3.long_running_recognize(config=config, audio=audio)
+    
+                conversion = operation.result(timeout=90)
+                
+                for result in conversion.results:
+                  pass
+                  
+                prompt = (result.alternatives[0].transcript)
+                
+                for chunk in client.models.generate_content_stream(
+                    model=MODEL_ID,
+                    config=types.GenerateContentConfig(
+                    system_instruction="You are a helpful assistant. Your answers need to be brief and concise.",
+                    temperature=1.0,
+                    top_p=0.95,
+                    top_k=20,
+                    max_output_tokens=100,
+                    ),
+                    contents=[
+                        types.Content(
+                            role="user",
+                            parts=[
+                                types.Part.from_uri(
+                                    file_uri=file_upload.uri,
+                                    mime_type=file_upload.mime_type),
+                                ]),
+                        prompt,]
+                ):
+                    
+                    run_streaming_tts_quickstart(chunk.text)
+                    
  
 
 if __name__ == "__main__":
