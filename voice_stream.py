@@ -29,7 +29,7 @@ def get_choice():
     return choice
 
 
-def run_streaming_tts_quickstart(textsample):
+def run_streaming_tts(textsample):
     client2 = texttospeech.TextToSpeechClient()
 
     streaming_config = texttospeech.StreamingSynthesizeConfig(voice=texttospeech.VoiceSelectionParams(name="en-US-Journey-D", language_code="en-US"))
@@ -83,7 +83,7 @@ def main():
                                     ]),
                             prompt,]
                     ):
-                        run_streaming_tts_quickstart(chunk.text)
+                        run_streaming_tts(chunk.text)
 
     
         elif choice == 'Audio 2 Audio':
@@ -131,7 +131,7 @@ def main():
                         prompt,]
                 ):
                     
-                    run_streaming_tts_quickstart(chunk.text)
+                    run_streaming_tts(chunk.text)
                     
  
 
