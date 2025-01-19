@@ -3,6 +3,7 @@ Use Google's text-to-speech and speech-to-text models to talk to your PDF files,
 Python Libraries you might need to install:
 
   pip install google-genai
-  pip install google-cloud-speech
+  pip install google-cloud-speech 
+  pip install google-cloud-texttospeech
   pip install simpleaudio
   pip install playsound
