@@ -63,27 +63,27 @@ def main():
                 with st.chat_message("user"):
                     st.write(prompt)
             
-                 with st.chat_message("model", avatar="🧞‍♀️",):
-                    for chunk in client.models.generate_content_stream(
-                        model=MODEL_ID,
-                        config=types.GenerateContentConfig(
-                        system_instruction="You are a helpful assistant. Your answers need to be brief and concise.",
-                        temperature=1.0,
-                        top_p=0.95,
-                        top_k=20,
-                        max_output_tokens=100,
-                        ),
-                        contents=[
-                            types.Content(
-                                role="user",
-                                parts=[
-                                    types.Part.from_uri(
-                                        file_uri=file_upload.uri,
-                                        mime_type=file_upload.mime_type),
-                                    ]),
-                            prompt,]
-                    ):
-                        run_streaming_tts(chunk.text)
+                with st.chat_message("model", avatar="🧞‍♀️",):
+                   for chunk in client.models.generate_content_stream(
+                       model=MODEL_ID,
+                       config=types.GenerateContentConfig(
+                       system_instruction="You are a helpful assistant. Your answers need to be brief and concise.",
+                       temperature=1.0,
+                       top_p=0.95,
+                       top_k=20,
+                       max_output_tokens=100,
+                       ),
+                       contents=[
+                           types.Content(
+                               role="user",
+                               parts=[
+                                   types.Part.from_uri(
+                                       file_uri=file_upload.uri,
+                                       mime_type=file_upload.mime_type),
+                                   ]),
+                           prompt,]
+                   ):
+                       run_streaming_tts(chunk.text)
 
     
         elif choice == 'Audio 2 Audio':
