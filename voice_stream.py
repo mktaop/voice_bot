@@ -142,4 +142,5 @@ if __name__ == "__main__":
     client = genai.Client(api_key=GOOGLE_API_KEY)
     MODEL_ID = "gemini-2.0-flash-exp"
     vertexai.init(project=projectid, location="us-central1")
+    client3 = speech.SpeechClient()
     main()
